@@ -16,7 +16,8 @@ export PR_BOLD_WHITE PR_BOLD_BLACK
 unset LSCOLORS
 
 # Main change, you can see directories on a dark background
-#expor tLSCOLORS=gxfxcxdxbxegedabagacad
+export LSCOLORS=gxfxcxdxbxegedabagacad
+export LS_COLORS=$LSCOLORS
 
 export CLICOLOR=1
-export LS_COLORS=exfxcxdxbxegedabagacad
+#export LS_COLORS=exfxcxdxbxegedabagacad

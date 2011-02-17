@@ -1,3 +1,12 @@
+;; Color schemes
+(add-to-list 'load-path "~/.emacs.d")
+(add-to-list 'load-path "~/.emacs.d/color-theme-6.6.0")
+(require 'color-theme)
+
+;; Linum
+;(require 'linum)
+;(global-linum-mode)
+
 ;; No menu bar!
 (menu-bar-mode 0)
 
@@ -39,3 +48,26 @@
 
 ;;ido-mode
 (ido-mode 1)
+
+;; Enable paredit by default
+(eval-after-load 'clojure-mode
+  '(progn
+     (require 'paredit)
+     (defun clojure-paredit-hook () (paredit-mode +1))
+     (add-hook 'clojure-mode-hook 'clojure-paredit-hook)
+     
+     (define-key clojure-mode-map "{" 'paredit-open-brace)
+     (define-key clojure-mode-map "}" 'paredit-close-brace)
+
+     (define-clojure-indent
+       (describe 'defun)
+       (testing 'defun)
+       (given 'defun)
+       (using 'defun)
+       (with 'defun)
+       (it 'defun)
+       (do-it 'defun))))
+
+;; Ignore slime protocol version
+(eval-after-load 'slime
+  '(setq slime-protocol-version 'ignore))
