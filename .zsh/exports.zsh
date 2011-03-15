@@ -12,7 +12,8 @@ export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.6/Home
 export CLOJURE_HOME=~/src/opensource/clojure
 
 # Setup terminal, and turn on colors
-export TERM=xterm-color
+#export TERM=xterm-color
+export TERM=xterm-256color
 export CLICOLOR=1
 
 # Enable color in grep

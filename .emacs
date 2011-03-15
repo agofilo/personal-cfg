@@ -1,11 +1,24 @@
+;;: ELPA
+;;; This was installed by package-install.el.
+;;; This provides support for the package system and
+;;; interfacing with ELPA, the package archive.
+;;; Move this code earlier if you want to reference
+;;; packages in your .emacs.
+(when
+    (load
+     (expand-file-name "~/.emacs.d/elpa/package.el"))
+  (package-initialize))
+
 ;; Color schemes
-(add-to-list 'load-path "~/.emacs.d")
 (add-to-list 'load-path "~/.emacs.d/color-theme-6.6.0")
 (require 'color-theme)
+(color-theme-initialize)
+(color-theme-billw)
 
 ;; Linum
-;(require 'linum)
-;(global-linum-mode)
+(require 'linum)
+(global-linum-mode)
+(setq linum-format "%3d ")
 
 ;; No menu bar!
 (menu-bar-mode 0)
@@ -16,6 +29,7 @@
 (setq indent-line-function 'insert-tab)
 
 ;; Move saved files elsewhere
+
 (defvar user-temporary-file-directory
   (concat "/Users/"  user-login-name "/.emacs.d/tmp"))
 (make-directory user-temporary-file-directory t)
@@ -28,16 +42,8 @@
 (setq auto-save-file-name-transform
       `((".*" ,user-temporary-file-directory t)))
 
+(setq auto-save-default nil)
 
-;;; This was installed by package-install.el.
-;;; This provides support for the package system and
-;;; interfacing with ELPA, the package archive.
-;;; Move this code earlier if you want to reference
-;;; packages in your .emacs.
-(when
-    (load
-     (expand-file-name "~/.emacs.d/elpa/package.el"))
-  (package-initialize))
 
 ;; SMEX
 ;; (require 'smex)
@@ -71,3 +77,19 @@
 ;; Ignore slime protocol version
 (eval-after-load 'slime
   '(setq slime-protocol-version 'ignore))
+
+;; Window resize keys
+(global-set-key (kbd "M-4") 'shrink-window-horizontally)
+(global-set-key (kbd "M-6") 'enlarge-window-horizontally)
+(global-set-key (kbd "M-8") 'shrink-window)
+(global-set-key (kbd "M-2") 'enlarge-window)
+
+;; enable nxhtml-mode for erb
+(setq 
+ nxhtml-global-minor-mode t
+ mumamo-chunk-coloring 'submode-colored
+ nxhtml-skip-welcome t
+ indent-region-mode t
+ rng-nxm-auto-validate-flag nil
+ nxml-degraded t)
+(add-to-list 'auto-mode-alist '("\\.html\\.erb\\'" . eruby-nxhtml-mumamo))
