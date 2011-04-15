@@ -30,8 +30,7 @@
 
 ;; Move saved files elsewhere
 
-(defvar user-temporary-file-directory
-  (concat "/Users/"  user-login-name "/.emacs.d/tmp"))
+(defvar user-temporary-file-directory "~/.emacs.d/tmp")
 (make-directory user-temporary-file-directory t)
 (setq backup-by-copying t)
 (setq backup-directory-alist
