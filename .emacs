@@ -83,6 +83,9 @@
 (global-set-key (kbd "M-8") 'shrink-window)
 (global-set-key (kbd "M-2") 'enlarge-window)
 
+;; 
+(global-set-key (kbd "C-}") 'paredit-forward-slurp-sexp)
+
 ;; enable nxhtml-mode for erb
 (setq 
  nxhtml-global-minor-mode t
