@@ -1,3 +1,4 @@
+
 ;;: ELPA
 ;;; This was installed by package-install.el.
 ;;; This provides support for the package system and
@@ -13,7 +14,8 @@
 (add-to-list 'load-path "~/.emacs.d/color-theme-6.6.0")
 (require 'color-theme)
 (color-theme-initialize)
-(color-theme-billw)
+(color-theme-charcoal-black)
+
 
 ;; Linum
 (require 'linum)
@@ -65,6 +67,8 @@
      (define-key clojure-mode-map "{" 'paredit-open-brace)
      (define-key clojure-mode-map "}" 'paredit-close-brace)
 
+     (define-key clojure-mode-map (kbd "M-)") 'paredit-forward-slurp-sexp)
+
      (define-clojure-indent
        (describe 'defun)
        (testing 'defun)
@@ -84,6 +88,10 @@
 (global-set-key (kbd "M-8") 'shrink-window)
 (global-set-key (kbd "M-2") 'enlarge-window)
 
+(setq mac-option-modifier 'meta)
+
+(setq inferior-lisp-program "script/repl")
+
 ;; enable nxhtml-mode for erb
 (setq 
  nxhtml-global-minor-mode t
@@ -93,3 +101,15 @@
  rng-nxm-auto-validate-flag nil
  nxml-degraded t)
 (add-to-list 'auto-mode-alist '("\\.html\\.erb\\'" . eruby-nxhtml-mumamo))
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(backward-delete-char-untabify-method (quote all)))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
