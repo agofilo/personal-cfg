@@ -32,8 +32,7 @@
 
 ;; Move saved files elsewhere
 
-(defvar user-temporary-file-directory
-  (concat "/Users/"  user-login-name "/.emacs.d/tmp"))
+(defvar user-temporary-file-directory "~/.emacs.d/tmp")
 (make-directory user-temporary-file-directory t)
 (setq backup-by-copying t)
 (setq backup-directory-alist
@@ -63,7 +62,7 @@
      (require 'paredit)
      (defun clojure-paredit-hook () (paredit-mode +1))
      (add-hook 'clojure-mode-hook 'clojure-paredit-hook)
-     
+
      (define-key clojure-mode-map "{" 'paredit-open-brace)
      (define-key clojure-mode-map "}" 'paredit-close-brace)
 
@@ -92,24 +91,12 @@
 
 (setq inferior-lisp-program "script/repl")
 
-;; enable nxhtml-mode for erb
-(setq 
- nxhtml-global-minor-mode t
- mumamo-chunk-coloring 'submode-colored
- nxhtml-skip-welcome t
- indent-region-mode t
- rng-nxm-auto-validate-flag nil
- nxml-degraded t)
-(add-to-list 'auto-mode-alist '("\\.html\\.erb\\'" . eruby-nxhtml-mumamo))
-(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(backward-delete-char-untabify-method (quote all)))
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- )
+(global-set-key (kbd "C-}") 'paredit-forward-slurp-sexp)
+
+(put 'dired-find-alternate-file 'disabled nil)
+
+(setq-default show-trailing-whitespace t)
+(setq-default indicate-empty-lines t)
+
+(setq auto-mode-alist (cons '("\\.cljs$" . clojure-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.html$" . html-mode) auto-mode-alist))

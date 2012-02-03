@@ -19,3 +19,6 @@ export EC2_HOME=~/.ec2
 export PATH=$PATH:$EC2_HOME/bin
 export EC2_PRIVATE_KEY=~/.ec2/certs/pk-OKXLFMO76CJ5XDZ6ZF3ZL3VRSS2WODZY.pem
 export EC2_CERT=~/.ec2/certs/cert-OKXLFMO76CJ5XDZ6ZF3ZL3VRSS2WODZY.pem
+
+unsetopt correct_all
+unsetopt correct
