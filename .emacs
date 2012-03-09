@@ -89,7 +89,7 @@
 
 (setq mac-option-modifier 'meta)
 
-(setq inferior-lisp-program "script/repl")
+(setq inferior-lisp-program "lein repl")
 
 (global-set-key (kbd "C-}") 'paredit-forward-slurp-sexp)
 
@@ -100,3 +100,6 @@
 
 (setq auto-mode-alist (cons '("\\.cljs$" . clojure-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.html$" . html-mode) auto-mode-alist))
+
+(setq org-src-fontify-natively t)
+(setq font-lock-verbose nil)

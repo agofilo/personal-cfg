@@ -22,3 +22,5 @@ export EC2_CERT=~/.ec2/certs/cert-OKXLFMO76CJ5XDZ6ZF3ZL3VRSS2WODZY.pem
 
 unsetopt correct_all
 unsetopt correct
+
+ssh-add
