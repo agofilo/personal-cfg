@@ -21,6 +21,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Aquamacs / Cocoa Emacs stuff
 
+(when (boundp 'aquamacs-version)
+  (tool-bar-mode 0)
+  (set-default-font "-apple-DejaVu_Sans_Mono-medium-normal-normal-*-13-*-*-*-m-0-iso10646-1"))
+
 (when (fboundp 'tabbar-mode) (tabbar-mode -1))
 
 (when (boundp 'osx-key-mode-map)
@@ -42,32 +46,46 @@
 (put 'erase-buffer 'disabled nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; CLOJURE/SWANK/SLIME
+;; Sexp highlighting
 
+(require 'mic-paren)
+(paren-activate)
+; (setq paren-sexp-mode t) ; Highlight entire sexp
 (show-paren-mode 1)
 
-(autoload 'clojure-mode "clojure-mode" nil t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; paredit
 
-(eval-after-load 'clojure-mode
-  '(progn
-     (require 'paredit)
-     (defun clojure-paredit-hook () (paredit-mode +1))
-     (add-hook 'clojure-mode-hook 'clojure-paredit-hook)
-     
-     (define-key clojure-mode-map "{" 'paredit-open-brace)
-     (define-key clojure-mode-map "}" 'paredit-close-brace)
-     (define-key paredit-mode-map (kbd "M-)") 'paredit-forward-slurp-sexp)
+(require 'paredit)
 
-     ;; Custom indentation rules; see clojure-indent-function
-     (define-clojure-indent
-       (describe 'defun)
-       (testing 'defun)
-       (given 'defun)
-       (using 'defun)
-       (with 'defun)
-       (it 'defun)
-       (do-it 'defun))))
+(defun enable-paredit-hook () 
+  (paredit-mode +1))
 
+(add-hook 'emacs-lisp-mode-hook       'enable-paredit-hook)
+(add-hook 'lisp-mode-hook             'enable-paredit-hook)
+(add-hook 'lisp-interaction-mode-hook 'enable-paredit-hook)
+(add-hook 'scheme-mode-hook           'enable-paredit-hook)
+(add-hook 'clojure-mode-hook          'enable-paredit-hook)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; CLOJURE/SWANK/SLIME
+
+(require 'clojure-mode)
+
+(define-key clojure-mode-map "{" 'paredit-open-brace)
+(define-key clojure-mode-map "}" 'paredit-close-brace)
+(define-key paredit-mode-map (kbd "M-)") 'paredit-forward-slurp-sexp)
+
+;; Custom indentation rules; see clojure-indent-function
+(define-clojure-indent
+  (describe 'defun)
+  (testing 'defun)
+  (given 'defun)
+  (using 'defun)
+  (with 'defun)
+  (it 'defun)
+  (do-it 'defun))
+ 
 (eval-after-load 'slime
   '(setq slime-protocol-version 'ignore))
 
@@ -130,7 +148,8 @@
 ;; Line-numbering
 
 (require 'hlinum)
-
+(setq linum-format "%4d ")
+(global-linum-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Color Themes
