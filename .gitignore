@@ -1,2 +1,7 @@
 .emacs.d/tmp/*
 .emacs.d/tmp*
+.emacs.d/elpa
+*.elc
+*~
+.emacs.d/swank
+.emacs.d/local/org-mode

@@ -1,0 +1,19 @@
+[user]
+	name = Luke VanderHart
+	email = luke@vanderhart.net
+[alias]
+	ci = commit
+	co = checkout
+	st = status
+	br = branch
+	di = diff
+[color]
+	ui = true
+[push]
+	default = tracking
+[color "status"]
+       added = yellow
+       changed = green
+       untracked = cyan
+[core]
+	excludesfile = ~/.gitignore_global
