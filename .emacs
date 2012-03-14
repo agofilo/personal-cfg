@@ -137,12 +137,15 @@
 ;; http://almostobsolete.net/daypage.html
 
 (require 'org)
+(require 'htmlize)
 
 (when (fboundp 'set-word-wrap)
   (add-hook 'org-mode-hook 'set-word-wrap))
 
 (setq org-src-fontify-natively t)
 (setq font-lock-verbose nil)
+
+(setq org-export-htmlize-output-type 'css)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Line-numbering
