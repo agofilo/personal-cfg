@@ -58,7 +58,7 @@
 
 (require 'paredit)
 
-(defun enable-paredit-hook () 
+(defun enable-paredit-hook ()
   (paredit-mode +1))
 
 (add-hook 'emacs-lisp-mode-hook       'enable-paredit-hook)
@@ -85,7 +85,7 @@
   (with 'defun)
   (it 'defun)
   (do-it 'defun))
- 
+
 (eval-after-load 'slime
   '(setq slime-protocol-version 'ignore))
 
@@ -99,21 +99,10 @@
 ;(autoload 'markdown-mode "markdown-mode.el"
 ;        "Major mode for editing Markdown files" t)
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; RUBY
+;; mmm-mode (for erb)
 
-;; Missing from ruby-mode.el, see https://groups.google.com/group/emacs-on-rails/msg/565fba8263233c28
-(defun ruby-insert-end () 
-  "Insert \"end\" at point and reindent current line." 
-  (interactive) 
-  (insert "end") 
-  (ruby-indent-line t) 
-  (end-of-line)) 
-
-(add-hook 'ruby-mode-hook
-          (lambda ()
-            (require 'ruby-electric)
-            (ruby-electric-mode t)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; IDO
@@ -165,6 +154,7 @@
 (require 'color-theme-twilight)
 (color-theme-twilight)
 
+(setq-default show-trailing-whitespace t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; FILE ASSOCIATIONS
