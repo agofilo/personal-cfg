@@ -1,3 +1,6 @@
+;; Disable magic loading (auto-mode-alist only)
+(setq magic-mode-alist ())
+
 ;;; Set Custom file location
 (setq custom-file "~/.emacs-custom.el")
 (load custom-file)
@@ -89,16 +92,14 @@
 (eval-after-load 'slime
   '(setq slime-protocol-version 'ignore))
 
-(setq inferior-lisp-program "script/repl")
+(setq inferior-lisp-program "lein repl")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Markdown Mode
 
 (require 'markdown-mode)
 
-;(autoload 'markdown-mode "markdown-mode.el"
-;        "Major mode for editing Markdown files" t)
-
+(add-hook 'markdown-mode-hook '(lambda () (auto-fill-mode 0)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; mmm-mode (for erb)
@@ -156,6 +157,14 @@
 
 (setq-default show-trailing-whitespace t)
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; html mode
+
+(add-hook 'html-mode-hook
+          (lambda()
+			(setq sgml-basic-offset 4)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; FILE ASSOCIATIONS
 
@@ -166,3 +175,5 @@
 (add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\md$" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.html$" . html-mode))
+(add-to-list 'auto-mode-alist '("\\.sass$" . css-mode))
