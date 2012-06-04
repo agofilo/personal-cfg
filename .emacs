@@ -92,7 +92,21 @@
 (eval-after-load 'slime
   '(setq slime-protocol-version 'ignore))
 
-(setq inferior-lisp-program "lein repl")
+
+(defun lein-repl ()
+  "Run 'lein repl' in an inferior-lisp."
+  (interactive)
+  (inferior-lisp "lein repl"))
+
+(defun lein2-repl ()
+  "Run 'lein2 repl' in an inferior-lisp."
+  (interactive)
+  (inferior-lisp "lein2 repl"))
+
+(defun cljs-repl ()
+  "Run 'lein2 trampoline cljs' in an inferior-lisp."
+  (interactive)
+  (inferior-lisp "lein2 trampoline cljsbuild repl-listen"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Markdown Mode
