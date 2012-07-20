@@ -21,25 +21,6 @@
 (push "~/.emacs.d/local/" load-path)
 (push "~/.emacs.d/local/org-mode/lisp" load-path)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Aquamacs / Cocoa Emacs stuff
-
-(when (boundp 'aquamacs-version)
-  (tool-bar-mode 0)
-  (set-default-font "-apple-DejaVu_Sans_Mono-medium-normal-normal-*-13-*-*-*-m-0-iso10646-1"))
-
-(when (fboundp 'tabbar-mode) (tabbar-mode -1))
-
-(when (boundp 'osx-key-mode-map)
-  (define-key osx-key-mode-map (kbd "C-;") nil))
-
-(when (fboundp 'fringe-mode) (fringe-mode 0))
-
-;; from https://gist.github.com/1297644
-(defun finder (location)
-  "Fire up finder in a location relative to pwd."
-  (interactive "sOpen finder at this location (relative to pwd): ")
-  (start-process "finder" "finder" "open" "-a" "Finder.app" location))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Restrict dangerous functions
@@ -180,6 +161,16 @@
 			(setq sgml-basic-offset 4)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; word-count fn
+
+(defun count (&optional begin end)
+  "count words between BEGIN and END (region); if no region defined, count words in buffer"
+  (interactive "r")
+  (let ((b (if mark-active begin (point-min)))
+	(e (if mark-active end (point-max))))
+    (message "Word count: %s" (how-many "\\w+" b e))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; FILE ASSOCIATIONS
 
 (add-to-list 'auto-mode-alist '("\\.\\(rdfs?\\|owl\\)$" . nxml-mode))
@@ -191,3 +182,23 @@
 (add-to-list 'auto-mode-alist '("\\md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.html$" . html-mode))
 (add-to-list 'auto-mode-alist '("\\.sass$" . css-mode))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Aquamacs / Cocoa Emacs stuff
+
+(when (boundp 'aquamacs-version)
+  (tool-bar-mode 0)
+  (set-default-font "-apple-DejaVu_Sans_Mono-medium-normal-normal-*-13-*-*-*-m-0-iso10646-1"))
+
+(when (fboundp 'tabbar-mode) (tabbar-mode -1))
+
+(when (boundp 'osx-key-mode-map)
+  (define-key osx-key-mode-map (kbd "C-;") nil))
+
+(when (fboundp 'fringe-mode) (fringe-mode 0))
+
+;; from https://gist.github.com/1297644
+(defun finder (location)
+  "Fire up finder in a location relative to pwd."
+  (interactive "sOpen finder at this location (relative to pwd): ")
+  (start-process "finder" "finder" "open" "-a" "Finder.app" location))
