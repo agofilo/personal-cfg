@@ -32,8 +32,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Sexp highlighting
 
-(require 'mic-paren)
-(paren-activate)
+;(require 'mic-paren)
+;(paren-activate)
 ; (setq paren-sexp-mode t) ; Highlight entire sexp
 (show-paren-mode 1)
 
@@ -216,7 +216,7 @@
 (add-to-list 'auto-mode-alist '("Capfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\md$" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.html$" . html-mode))
-(add-to-list 'auto-mode-alist '("\\.sass$" . css-mode))
+(add-to-list 'auto-mode-alist '("\\.scss$" . css-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Aquamacs / Cocoa Emacs stuff
