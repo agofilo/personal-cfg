@@ -2,11 +2,15 @@
 ;;;;;;; Setup only works with Emacs 24
 (require 'package)
 
-(setq package-archives (append package-archives
-			       '(("tromey" . "http://tromey.com/elpa/")
-				 ("gnu" . "http://elpa.gnu.org/packages/")
-				 ("marmalade" . "http://marmalade-repo.org/packages/")
-				 ("melpa" . "http://melpa.milkbox.net/packages/"))))
+(add-to-list 'package-archives
+	     '("marmalade" . "http://marmalade-repo.org/packages/") t)
+
+(add-to-list 'package-archives
+	     '("tromey" . "http://tromey.com/elpa/") t)
+
+(add-to-list 'package-archives
+	     '("melpa" . "http://melpa.milkbox.net/packages/") t)
+
 
 (package-initialize)
 
@@ -25,12 +29,23 @@
 (conditional-install 'ruby-electric)
 (conditional-install 'smex)
 (conditional-install 'paredit)
- 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Locally-installed packages (non-ELPA)
 
 (push "~/.emacs.d/local/" load-path)
 (push "~/.emacs.d/local/org-mode/lisp" load-path)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Ritz Slime server
+
+(unless (require 'slime nil t)
+  (progn
+    (url-copy-file "https://github.com/downloads/pallet/ritz/slime-20101113.1.tar"
+		   "/tmp/slime-20101113.1.tar" t)
+    (package-install-file "/tmp/slime-20101113.1.tar")))
+
+(conditional-install 'slime-ritz)
 
 
 ;; Disable magic loading (auto-mode-alist only)
@@ -73,6 +88,9 @@
 ;; CLOJURE
 
 (require 'clojure-mode)
+
+(eval-after-load 'slime
+  '(setq slime-protocol-version 'ignore))
 
 (define-key clojure-mode-map "{" 'paredit-open-brace)
 (define-key clojure-mode-map "}" 'paredit-close-brace)
@@ -234,7 +252,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Aquamacs / Cocoa Emacs stuff
-
 
 (set-default-font "-apple-DejaVu_Sans_Mono-medium-normal-normal-*-13-*-*-*-m-0-iso10646-1")
 
