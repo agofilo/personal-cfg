@@ -16,11 +16,6 @@ function link_with_backup {
     ln -s $SOURCE $TARGET
 }
 
-function install_elpa {
-    rm -rf $CONFIGDIR/.emacs.d/elpa
-    emacs --script $CONFIGDIR/install_elpa.el
-}
-
 function update_submodules {
     git submodule init
     git submodule update

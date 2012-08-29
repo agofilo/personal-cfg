@@ -1,26 +1,44 @@
-;; Disable magic loading (auto-mode-alist only)
-(setq magic-mode-alist ())
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;; Setup only works with Emacs 24
+(require 'package)
 
-;;; Set Custom file location
-(setq custom-file "~/.emacs-custom.el")
-(load custom-file)
+(setq package-archives (append package-archives
+			       '(("tromey" . "http://tromey.com/elpa/")
+				 ("gnu" . "http://elpa.gnu.org/packages/")
+				 ("marmalade" . "http://marmalade-repo.org/packages/")
+				 ("melpa" . "http://melpa.milkbox.net/packages/"))))
 
-;;; This was installed by package-install.el.
-;;; This provides support for the package system and
-;;; interfacing with ELPA, the package archive.
-;;; Move this code earlier if you want to reference
-;;; packages in your .emacs.
-(when
-    (load
-     (expand-file-name "~/.emacs.d/elpa/package.el"))
-  (package-initialize))
+(package-initialize)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ELPA packages
+
+(package-refresh-contents)
+
+(defun conditional-install (name)
+  (unless (require name nil t)
+    (package-install name)))
+
+(conditional-install 'css-mode)
+(conditional-install 'paredit)
+(conditional-install 'ruby-mode)
+(conditional-install 'ruby-electric)
+(conditional-install 'smex)
+(conditional-install 'paredit)
+ 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Locally-installed packages (non-ELPA)
 
 (push "~/.emacs.d/local/" load-path)
 (push "~/.emacs.d/local/org-mode/lisp" load-path)
 
+
+;; Disable magic loading (auto-mode-alist only)
+(setq magic-mode-alist ())
+
+;;; Set Custom file location
+(setq custom-file "~/.emacs-custom.el")
+(load custom-file)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Restrict dangerous functions
@@ -52,7 +70,7 @@
 (add-hook 'clojure-mode-hook          'enable-paredit-hook)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; CLOJURE/SWANK/SLIME
+;; CLOJURE
 
 (require 'clojure-mode)
 
@@ -69,10 +87,6 @@
   (with 'defun)
   (it 'defun)
   (do-it 'defun))
-
-(eval-after-load 'slime
-  '(setq slime-protocol-version 'ignore))
-
 
 (defun lein-repl ()
   "Run 'lein repl' in an inferior-lisp."
