@@ -29,6 +29,7 @@
 (conditional-install 'ruby-electric)
 (conditional-install 'smex)
 (conditional-install 'paredit)
+(conditional-install 'nrepl)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Locally-installed packages (non-ELPA)
@@ -38,15 +39,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Ritz Slime server
-
-(unless (require 'slime nil t)
-  (progn
-    (url-copy-file "https://github.com/downloads/pallet/ritz/slime-20101113.1.tar"
-		   "/tmp/slime-20101113.1.tar" t)
-    (package-install-file "/tmp/slime-20101113.1.tar")))
-
-(conditional-install 'slime-ritz)
-
 
 ;; Disable magic loading (auto-mode-alist only)
 (setq magic-mode-alist ())
@@ -106,20 +98,25 @@
   (it 'defun)
   (do-it 'defun))
 
-(defun lein-repl ()
+(add-hook 'clojure-mode-hook
+          '(lambda ()
+             (define-key clojure-mode-map
+               "\e\C-x" 'lisp-eval-defun)
+             (define-key clojure-mode-map
+               "\C-x\C-e" 'lisp-eval-last-sexp)
+             (define-key clojure-mode-map
+               "\C-c\C-e" 'lisp-eval-last-sexp)
+             (define-key clojure-mode-map
+               "\C-c\C-r" 'lisp-eval-region)
+             (define-key clojure-mode-map
+               "\C-c\C-z" 'run-lisp)))
+
+(defun repl ()
   "Run 'lein repl' in an inferior-lisp."
   (interactive)
-  (inferior-lisp "lein repl"))
+  (setq inferior-lisp-program "lein trampoline run -m clojure.main")
+  (inferior-lisp "lein trampoline run -m clojure.main"))
 
-(defun lein2-repl ()
-  "Run 'lein2 repl' in an inferior-lisp."
-  (interactive)
-  (inferior-lisp "lein2 repl"))
-
-(defun cljs-repl ()
-  "Run 'lein2 trampoline cljs' in an inferior-lisp."
-  (interactive)
-  (inferior-lisp "lein2 trampoline cljsbuild repl-listen"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Markdown Mode
