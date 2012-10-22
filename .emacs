@@ -17,7 +17,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ELPA packages
 
-(package-refresh-contents)
+;(package-refresh-contents)
 
 (defun conditional-install (name)
   (unless (require name nil t)
@@ -77,6 +77,14 @@
 (add-hook 'clojure-mode-hook          'enable-paredit-hook)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Textmate Mode (fuzzy file finder, etc)
+
+(require 'textmate)
+(textmate-mode)
+
+(global-set-key (kbd "C-x f") 'textmate-goto-file)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; CLOJURE
 
 (require 'clojure-mode)
@@ -122,7 +130,6 @@
 ;; Markdown Mode
 
 (require 'markdown-mode)
-
 (add-hook 'markdown-mode-hook '(lambda () (auto-fill-mode 0)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -165,7 +172,6 @@
 ;; Change the way emacs handles buffer
 ;; names for files with the same name.
 
-
 (require 'uniquify)
 (setq
  uniquify-buffer-name-style 'post-forward
@@ -206,23 +212,16 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Color Themes
 
-(require 'color-theme)
-(eval-after-load "color-theme"
-  '(progn
-     (color-theme-initialize)))
+;;(require 'color-theme)
+;;(eval-after-load "color-theme"
+;; '(progn
+;;(color-theme-initialize)))
 
 (require 'color-theme-twilight)
-(color-theme-twilight)
+  (color-theme-twilight)
 
-(setq-default show-trailing-whitespace t)
+ (setq-default show-trailing-whitespace t)
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; html mode
-
-(add-hook 'html-mode-hook
-          (lambda()
-			(setq sgml-basic-offset 4)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; word-count fn
@@ -264,3 +263,12 @@
   "Fire up finder in a location relative to pwd."
   (interactive "sOpen finder at this location (relative to pwd): ")
   (start-process "finder" "finder" "open" "-a" "Finder.app" location))
+
+;; Tabs are 2 spaces
+(setq-default indent-tabs-mode nil)
+(setq standard-indent 2)
+(setq-default tab-width 2)
+(setq indent-line-function 'insert-tab)
+(setq js-indent-level 4)
+(setq sgml-basic-offset 2)
+(setq css-indent-offset 2)

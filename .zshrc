@@ -24,3 +24,5 @@ unsetopt correct_all
 unsetopt correct
 
 ssh-add
+
+alias truecrypt='/Applications/TrueCrypt.app/Contents/MacOS/Truecrypt --text'

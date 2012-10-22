@@ -1,3 +1,6 @@
 [submodule "submodules/clojure-mode"]
 	path = submodules/clojure-mode
 	url = https://github.com/technomancy/clojure-mode.git
+[submodule "submodules/textmate-mode"]
+	path = submodules/textmate-mode
+	url = git://github.com/defunkt/textmate.el.git
