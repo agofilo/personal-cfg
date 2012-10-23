@@ -75,6 +75,30 @@
 (add-hook 'lisp-interaction-mode-hook 'enable-paredit-hook)
 (add-hook 'scheme-mode-hook           'enable-paredit-hook)
 (add-hook 'clojure-mode-hook          'enable-paredit-hook)
+(add-hook 'nrepl-mode-hook            'enable-paredit-hook)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; nREPL
+
+;; Disable prompt on killing buffer with a process
+(setq kill-buffer-query-functions
+      (remq 'process-kill-buffer-query-function
+            kill-buffer-query-functions))
+
+(defun nrepl-kill ()
+  "Kill all nrepl buffers and processes"
+  (interactive)
+  (when (get-process "nrepl-server")
+    (set-process-sentinel (get-process "nrepl-server")
+                          (lambda (proc evt) t)))
+  (dolist (buffer (buffer-list))
+    (when (string-prefix-p "*nrepl" (buffer-name buffer))
+      (kill-buffer buffer))))
+
+(defun nrepl-me ()
+  (interactive)
+  (nrepl-kill)
+  (nrepl-jack-in nil))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Textmate Mode (fuzzy file finder, etc)
