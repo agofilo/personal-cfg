@@ -107,6 +107,7 @@
 (textmate-mode)
 
 (global-set-key (kbd "C-x f") 'textmate-goto-file)
+(define-key  *textmate-mode-map* (kbd "C-c C-k") nil) ;; reserved for nRepl
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; CLOJURE
