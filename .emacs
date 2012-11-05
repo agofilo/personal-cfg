@@ -29,7 +29,34 @@
 (conditional-install 'ruby-electric)
 (conditional-install 'smex)
 (conditional-install 'paredit)
-(conditional-install 'nrepl)
+;(conditional-install 'nrepl)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; nREPL
+
+;; Get the latest version...
+(unless (require 'nrepl nil t)
+  (package-install-file "~/.emacs.d/local/nrepl.el"))
+
+;; Disable prompt on killing buffer with a process
+(setq kill-buffer-query-functions
+      (remq 'process-kill-buffer-query-function
+            kill-buffer-query-functions))
+
+(defun nrepl-kill ()
+  "Kill all nrepl buffers and processes"
+  (interactive)
+  (when (get-process "nrepl-server")
+    (set-process-sentinel (get-process "nrepl-server")
+                          (lambda (proc evt) t)))
+  (dolist (buffer (buffer-list))
+    (when (string-prefix-p "*nrepl" (buffer-name buffer))
+      (kill-buffer buffer))))
+
+(defun nrepl-me ()
+  (interactive)
+  (nrepl-kill)
+  (nrepl-jack-in nil))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Locally-installed packages (non-ELPA)
@@ -77,28 +104,6 @@
 (add-hook 'clojure-mode-hook          'enable-paredit-hook)
 (add-hook 'nrepl-mode-hook            'enable-paredit-hook)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; nREPL
-
-;; Disable prompt on killing buffer with a process
-(setq kill-buffer-query-functions
-      (remq 'process-kill-buffer-query-function
-            kill-buffer-query-functions))
-
-(defun nrepl-kill ()
-  "Kill all nrepl buffers and processes"
-  (interactive)
-  (when (get-process "nrepl-server")
-    (set-process-sentinel (get-process "nrepl-server")
-                          (lambda (proc evt) t)))
-  (dolist (buffer (buffer-list))
-    (when (string-prefix-p "*nrepl" (buffer-name buffer))
-      (kill-buffer buffer))))
-
-(defun nrepl-me ()
-  (interactive)
-  (nrepl-kill)
-  (nrepl-jack-in nil))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Textmate Mode (fuzzy file finder, etc)
@@ -290,7 +295,7 @@
   (start-process "finder" "finder" "open" "-a" "Finder.app" location))
 
 ;; Tabs are 2 spaces
-(setq-default indent-tabs-mode nil)
+(setq-default indent-tabs-mode t)
 (setq standard-indent 2)
 (setq-default tab-width 2)
 (setq indent-line-function 'insert-tab)
