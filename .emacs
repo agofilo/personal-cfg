@@ -58,6 +58,14 @@
   (nrepl-kill)
   (nrepl-jack-in nil))
 
+;; Kill nrepl-errors with escape key
+(defun kill-nrepl-error-buffer ()
+  (interactive)
+  (let ((buf (get-buffer "*nREPL error*")))
+    (when buf (kill-buffer buf))))
+
+(global-set-key (kbd "<escape>") 'kill-nrepl-error-buffer)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Locally-installed packages (non-ELPA)
 
@@ -295,7 +303,7 @@
   (start-process "finder" "finder" "open" "-a" "Finder.app" location))
 
 ;; Tabs are 2 spaces
-(setq-default indent-tabs-mode t)
+(setq-default indent-tabs-mode nil)
 (setq standard-indent 2)
 (setq-default tab-width 2)
 (setq indent-line-function 'insert-tab)
