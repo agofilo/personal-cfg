@@ -29,7 +29,7 @@
 (conditional-install 'ruby-electric)
 (conditional-install 'smex)
 (conditional-install 'paredit)
-;(conditional-install 'nrepl)
+(conditional-install 'magit)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; nREPL
@@ -71,9 +71,6 @@
 
 (push "~/.emacs.d/local/" load-path)
 (push "~/.emacs.d/local/org-mode/lisp" load-path)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Ritz Slime server
 
 ;; Disable magic loading (auto-mode-alist only)
 (setq magic-mode-alist ())
@@ -310,3 +307,31 @@
 (setq js-indent-level 4)
 (setq sgml-basic-offset 2)
 (setq css-indent-offset 2)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Text scaling
+
+(define-globalized-minor-mode
+  global-text-scale-mode
+  text-scale-mode
+  (lambda () (text-scale-mode 1)))
+
+(defun global-text-scale-adjust (inc) (interactive)
+  (text-scale-set 1)
+  (kill-local-variable 'text-scale-mode-amount)
+  (setq-default text-scale-mode-amount (+ text-scale-mode-amount inc))
+  (global-text-scale-mode 1))
+
+(global-set-key (kbd "M-0")
+                '(lambda () (interactive)
+                   (global-text-scale-adjust (- text-scale-mode-amount))
+                   (global-text-scale-mode -1)))
+(global-set-key (kbd "M-=")
+                '(lambda () (interactive) (global-text-scale-adjust 1)))
+(global-set-key (kbd "M--")
+                '(lambda () (interactive) (global-text-scale-adjust -1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Misc prefs
+
+(global-auto-revert-mode t)
