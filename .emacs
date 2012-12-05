@@ -335,3 +335,6 @@
 ;; Misc prefs
 
 (global-auto-revert-mode t)
+(auto-save-mode nil)
+(setq auto-save-default nil)
+(setq make-backup-files nil)
